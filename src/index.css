@@ -1,0 +1,57 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+}
+.dropit-container
+{
+	width:99%;
+	height:800px;
+	border:2px solid blue;
+	margin:0 auto;
+}
+.todo
+{
+	width:150px;
+	height:150px;
+	border:solid 1px black;
+	color:black;
+	margin:0 auto;
+	margin-top:5px;
+}
+#todo-01
+{
+	background-color:grey;
+}
+#todo-02
+{
+	background-color:yellow;
+}
+.title
+{
+	text-align:center;
+}
+
+.image
+{
+	max-width:100%;
+}
+.todo-container
+{
+	width:200px;
+	height:700px;
+	border:2px solid red;
+	position:fixed;
+	top:50px;
+	left:10px;
+}
+
+.completed-container
+{
+	width:200px;
+	height:700px;
+	border:2px solid green;
+	top:50px;
+	right:10px;
+	position:fixed;
+}
