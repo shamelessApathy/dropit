@@ -10,7 +10,7 @@ body {
 	border:2px solid blue;
 	margin:0 auto;
 }
-.todo
+.task
 {
 	width:150px;
 	height:150px;
@@ -19,11 +19,11 @@ body {
 	margin:0 auto;
 	margin-top:5px;
 }
-#todo-01
+#task-01
 {
 	background-color:grey;
 }
-#todo-02
+#task-02
 {
 	background-color:yellow;
 }
