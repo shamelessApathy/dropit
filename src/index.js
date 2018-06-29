@@ -65,70 +65,42 @@ class DropIt extends React.Component {
 			/>
 			);
 	}
-	rebuildCompletes()
+	rebuildTasks(element, column)
 	{
-		let container = document.getElementById('complete-div');
-		let children = container.children;
-		console.log(children);
-		let completes_array = [];
-		for (let i = 0; i < children.length; i++)
+		if (column === "complete")
 		{
-			if (children[i].className === "outer-tasks")
+			let todos = this.state.todos;
+			for (let i = 0; i < todos.length; i++)
 			{
-				let secondChildren = children[i].children;
-				for (let j = 0; j < secondChildren.length; j++)
+				if (todos[i].id === element.id)
 				{
-					let dataText = secondChildren[j].getAttribute('data-text');
-					let id = secondChildren[j].id;
-
-					completes_array.push({"text":dataText,"class":"task","id":id});
+					todos.splice(i, 1);
 				}
 			}
-			else
-			{
-				let dataText = children[i].getAttribute('data-text');
-				let id = children[i].id;
-				completes_array.push({"text":dataText, "class":"task","id":id});
-			}
+			let completes = this.state.completes;
+			completes.push(element);
+			this.setState({
+				todos: todos,
+				completes: completes
+			})
 		}
-		return completes_array;
-
-	}
-	rebuildToDos()
-	{
-		let container = document.getElementById('todo-div');
-		let children = container.children;
-		let todos_array = [];
-		for (let i = 0; i < children.length; i++)
+		if (column === "todo")
 		{
-			if (children[i].className === "outer-tasks")
+			let completes = this.state.completes;
+			for (let i = 0; i < completes.length; i++)
 			{
-				let secondChildren = children[i].children;
-				for (let j = 0; j < secondChildren.length; j++)
+				if (completes[i].id === element.id)
 				{
-					let dataText = secondChildren[j].getAttribute('data-text');
-					let id = secondChildren[j].id;
-
-					todos_array.push({"text":dataText,"class":"task","id":id});
+					completes.splice(i, 1);
 				}
 			}
-			else
-			{
-				let dataText = children[i].getAttribute('data-text');
-				let id = children[i].id;
-				todos_array.push({"text":dataText, "class":"task","id":id});
-			}
+			let todos = this.state.todos;
+			todos.push(element);
+			this.setState({
+				todos: todos,
+				completes: completes
+			})
 		}
-		return todos_array;
-	}
-	rebuildTasks()
-	{
-		let completes = this.rebuildCompletes();
-		let todos = this.rebuildToDos();
-		this.setState({
-			todos: todos,
-			completes: completes 
-		})
 	}
 	allowDrop(ev)
 	{
@@ -144,15 +116,19 @@ class DropIt extends React.Component {
 
 		ev.preventDefault();
 		let data = ev.dataTransfer.getData("text");
-		console.log(data);
-		ev.target.appendChild(document.getElementById(data));
-
-		// Needs to be below appendChild to count right number of child divs
-		console.log(ev.target.className);
-		if (ev.target.className === "completed-container")
+		let text = document.getElementById(data).innerHTML;
+		let task = {"text":text, "class":"task","id":data};
+		console.log("data:" + data);
+		console.log("text:" + text);
+		if (ev.target.id === "complete-div")
 		{
-			this.rebuildTasks();
+			this.rebuildTasks(task, "complete");
 		}
+		if (ev.target.id === "todo-div")
+		{
+			this.rebuildTasks(task, "todo");
+		}
+		
 	}
 	componentDidCatch(error, info) 
 	{
